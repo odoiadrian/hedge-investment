@@ -1,0 +1,95 @@
+{
+  "capital_gbp": 100000,
+  "horizon": "1 year",
+  "client_profile": {
+    "fund_stage": "seed-stage hedge fund",
+    "objective": "Compare bonds, real estate, and S&P 500 exposure",
+    "risk_tolerance": "Show risk-averse, average, and risk-seeking alternatives",
+    "liquidity_needs": "Not specified; assess the selected vehicle before investing",
+    "constraints": [
+      "GBP reporting currency",
+      "Bond issuer and maturity mix not specified",
+      "Real-estate vehicle (direct property, listed REIT, or fund) not specified",
+      "S&P 500 currency hedging not specified"
+    ]
+  },
+  "assumptions_note": "The return assumptions below are fictional demo inputs, not forecasts or current market estimates. Replace them with dated, reviewed research before using the results.",
+  "investment_options": [
+    {
+      "asset_class": "bonds",
+      "name": "Bond exposure",
+      "instrument": "Government/corporate mix, issuer quality, maturity, and currency unspecified",
+      "base_return_assumption": 0.025,
+      "downside_return_assumption": -0.07,
+      "rewards": [
+        "Coupon income can provide a more predictable cash-flow component than equities",
+        "High-quality bonds may diversify equity exposure",
+        "Bond prices may rise when market yields fall, depending on duration"
+      ],
+      "risks": [
+        "Issuer default or credit-spread widening can reduce value",
+        "Rising yields can lower the market value of existing fixed-rate bonds",
+        "Inflation can erode the purchasing power of fixed coupon and principal payments",
+        "Liquidity, reinvestment, and currency risks depend on the bond and vehicle"
+      ],
+      "sources": [
+        {
+          "label": "Investor.gov bonds and fixed-income risks",
+          "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products/bonds"
+        }
+      ]
+    },
+    {
+      "asset_class": "real_estate",
+      "name": "Real-estate exposure",
+      "instrument": "Property fund/REIT or direct property not specified",
+      "base_return_assumption": 0.045,
+      "downside_return_assumption": -0.20,
+      "rewards": [
+        "Property can generate rental income and may appreciate in value",
+        "A diversified property vehicle can add an asset source distinct from public equities and bonds",
+        "Some listed REITs can be traded more readily than directly held property"
+      ],
+      "risks": [
+        "Direct property and non-traded vehicles can be illiquid, costly, and difficult to value",
+        "Property values and financing costs can be sensitive to interest rates",
+        "Vacancy, tenant default, maintenance, leverage, and geographic concentration can reduce returns",
+        "Listed REIT prices can fall with equity markets even when underlying property values change more slowly"
+      ],
+      "sources": [
+        {
+          "label": "Investor.gov REIT benefits, risks, and liquidity distinctions",
+          "url": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins/real"
+        }
+      ]
+    },
+    {
+      "asset_class": "sp500",
+      "name": "S&P 500 exposure",
+      "instrument": "Index-tracker exposure; GBP hedging choice not specified",
+      "base_return_assumption": 0.07,
+      "downside_return_assumption": -0.32,
+      "rewards": [
+        "Exposure to large U.S. companies across multiple industries",
+        "Equity ownership offers potential long-term capital growth and dividend income",
+        "An index tracker can spread company-specific risk across its constituents"
+      ],
+      "risks": [
+        "Equity prices can fall sharply and losses are not capped at the supplied downside scenario",
+        "Market-cap weighting means the largest constituents can have an outsized effect on results",
+        "A GBP investor may gain or lose from USD/GBP exchange-rate movements if unhedged",
+        "The index is concentrated in U.S. equities and does not represent a globally diversified portfolio"
+      ],
+      "sources": [
+        {
+          "label": "S&P Dow Jones Indices S&P 500 overview and methodology",
+          "url": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/"
+        },
+        {
+          "label": "Investor.gov overview of market and volatility risk",
+          "url": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+        }
+      ]
+    }
+  ]
+}

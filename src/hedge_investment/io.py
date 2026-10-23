@@ -50,7 +50,7 @@ def _portfolio_from_dict(data: Any, index: int) -> Portfolio:
 
 
 def load_analysis_input(path: str | Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, str]]:
-    """Load comparison assumptions, client context, and optional SEC CIKs."""
+    """Load either three asset-class assumptions or two legacy portfolios."""
     input_path = Path(path)
     try:
         with input_path.open("r", encoding="utf-8") as file:
@@ -60,6 +60,12 @@ def load_analysis_input(path: str | Path) -> tuple[dict[str, Any], dict[str, Any
 
     if not isinstance(data, dict):
         raise ValueError("The input JSON root must be an object.")
+    if "investment_options" in data:
+        from .recommendations import build_investment_analysis
+
+        result = build_investment_analysis(data)
+        return result, result["client_profile"], {}
+
     raw_portfolios = data.get("portfolios")
     if not isinstance(raw_portfolios, list) or len(raw_portfolios) != 2:
         raise ValueError("The input must contain exactly two portfolios.")

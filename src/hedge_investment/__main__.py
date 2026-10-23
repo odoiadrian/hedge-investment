@@ -11,16 +11,16 @@ from .sec_edgar import SecDataError, fetch_company_facts
 
 def main() -> None:
     project_root = Path(__file__).resolve().parents[2]
-    example_input = project_root / "examples" / "portfolio_comparison.json"
+    example_input = project_root / "examples" / "investment_options.json"
 
     parser = argparse.ArgumentParser(
-        description="Compare defensive and aggressive portfolio scenarios from JSON."
+        description="Evaluate bonds, real estate, and S&P 500 options and compare three risk tiers."
     )
     parser.add_argument(
         "input",
         nargs="?",
         default=str(example_input),
-        help="input JSON file (defaults to the fictional example in examples/)",
+        help="input JSON file (defaults to the illustrative asset-class example in examples/)",
     )
     parser.add_argument(
         "--explain",
@@ -38,6 +38,10 @@ def main() -> None:
         result, client_profile, cik_by_ticker = load_analysis_input(args.input)
         public_facts = None
         if args.sec_data:
+            if result.get("mode") == "asset_class_recommendations":
+                parser.error(
+                    "--sec-data is for legacy single-company holdings; asset-class inputs already include source references."
+                )
             if not args.explain:
                 parser.error("--sec-data requires --explain so the retrieved facts can be analysed.")
             tickers = list(dict.fromkeys(
