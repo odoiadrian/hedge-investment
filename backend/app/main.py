@@ -6,6 +6,7 @@ from .config import ROOT, credential_fields_present
 from .models import ClientProfile, PortfolioDashboard
 from .pipeline import generate_dashboard, dataset_status, DataUnavailable
 from .llm import AnalystUnavailable
+from .verification import VerificationRequest, VerificationUnavailable, verify_microsoft
 
 app = FastAPI(
     title="HedgeHog API",
@@ -38,6 +39,15 @@ def recommendations(profile: ClientProfile, response: Response) -> PortfolioDash
         return generate_dashboard(profile)
     except (AnalystUnavailable, DataUnavailable) as exc:
         raise HTTPException(status_code=503, detail=str(exc), headers={"Cache-Control": "no-store"}) from exc
+
+
+@app.post('/api/holdings/MSFT/update')
+async def update_microsoft(request: VerificationRequest, response: Response):
+    response.headers['Cache-Control'] = 'no-store'
+    try:
+        return await verify_microsoft(request)
+    except VerificationUnavailable as exc:
+        raise HTTPException(status_code=503, detail=str(exc), headers={'Cache-Control': 'no-store'}) from exc
 
 
 # Optional single-server demo: build the frontend, then restart the backend.

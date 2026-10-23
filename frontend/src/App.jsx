@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { createDashboard } from './api.js'
 import ClientForm, { EMPTY_PROFILE } from './components/ClientForm.jsx'
 import Portfolio from './components/Portfolio.jsx'
+import Loading from './components/Loading.jsx'
+import logo from './assets/hedgehog-logo.svg'
 
 export default function App() {
   const [profile, setProfile] = useState({ ...EMPTY_PROFILE })
@@ -9,6 +11,7 @@ export default function App() {
   const [editing, setEditing] = useState(true)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [view, setView] = useState('overview')
   const request = useRef(null)
   const heading = useRef(null)
 
@@ -16,7 +19,7 @@ export default function App() {
   useEffect(() => {
     heading.current?.focus({ preventScroll: true })
     window.scrollTo(0, 0)
-  }, [editing])
+  }, [editing, view, loading])
 
   async function submit(event) {
     event.preventDefault()
@@ -41,6 +44,7 @@ export default function App() {
         target_return_pct: profile.target_return_pct === '' ? null : Number(profile.target_return_pct),
       }, controller.signal)
       setDashboard(result)
+      setView('overview')
       setEditing(false)
     } catch (cause) {
       setError(cause.name === 'AbortError'
@@ -57,11 +61,16 @@ export default function App() {
 
   return (
     <div className="app">
-      <header className="header"><span className="brand">HedgeHog<span>.</span></span><span className="muted">Investment workspace</span></header>
-      <main>
-        {editing
+      <a className="skip-link" href="#main">Skip to content</a>
+      <header className="header"><div className="header-inner"><span className="brand"><img src={logo} width="48" height="29" alt="" />hedgehog</span>
+        <nav aria-label="Workspace">
+          {dashboard?.status === 'ready' && !loading && <><button className="nav-button" aria-current={!editing && view === 'overview' ? 'page' : undefined} onClick={() => { setEditing(false); setView('overview') }}>Overview</button><button className="nav-button" aria-current={!editing && view === 'holdings' ? 'page' : undefined} onClick={() => { setEditing(false); setView('holdings') }}>Portfolio</button></>}
+          <button className="nav-button" disabled={loading} aria-current={editing && !loading ? 'page' : undefined} onClick={() => setEditing(true)}>Client profile</button>
+        </nav><span className="workspace-label">Investment workspace</span></div></header>
+      <main id="main">
+        {loading ? <Loading headingRef={heading} /> : editing
           ? <ClientForm profile={profile} setProfile={setProfile} onSubmit={submit} loading={loading} error={error} headingRef={heading} />
-          : <Portfolio dashboard={dashboard} onEdit={() => { setError(''); setEditing(true) }} headingRef={heading} />}
+          : <Portfolio dashboard={dashboard} view={view} setView={setView} onEdit={() => { setError(''); setEditing(true) }} headingRef={heading} />}
       </main>
       <footer>Educational prototype · Model estimates, not guaranteed returns. Preferences are processed by the event AI service; client records are not saved.</footer>
     </div>

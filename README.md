@@ -11,6 +11,8 @@ A minimal client-to-portfolio workspace for the Microsoft x LSEG hackathon. Fast
 
 The interface stays deliberately small: a client form and a portfolio view. Client records exist only in browser memory and are cleared on reload. There is no authentication, database, trade execution or hosting.
 
+The interface follows the supplied `hedgehog-ui-handoff.zip`: its blue design tokens, Newsreader/IBM Plex fonts, hedgehog logo and reduced-motion-aware loading animation. The overview groups actual allocations by investment type; opening a holding shows its allocation, client fit and source evidence in keyboard-accessible tabs. Google Fonts supplies the fonts, with system fallbacks. Sample clients, sample signals and MCP connection claims from the design are not shown as live features.
+
 ## Run locally
 
 Dependencies, market data and the frontend build are already present in this checkout. The supplied event credentials are configured in the ignored root `.env`.
@@ -72,6 +74,16 @@ The Azure SDK configuration follows `mshack-example-python-master.zip`. The back
 If preference extraction fails, the request fails clearly rather than ignoring constraints. If only the explanation fails, valid portfolios still appear with deterministic model reasoning. The dataset has no verified company ESG/political-activity coverage, so broad alignment requests need clarification rather than invented screening. There is no walk-forward backtest, transaction-cost model, lot sizing or guarantee of profit. Futures are research proxies, not executable $1 fractional positions. Historical stress can exceed a normal-tail loss limit and is shown explicitly.
 
 ## Source map
+
+### Microsoft evidence update (demo)
+
+Open Microsoft in the portfolio and press **Update**. FastAPI connects over stdio to the local `backend.mcp_msft.server` using the official Python MCP SDK, discovers its read-only `refresh_microsoft` tool and calls it. This is a HedgeHog-built MCP connector, not an MCP server supplied by Microsoft. No separate process setup, credentials or new API key is needed; install the updated requirements and restart the backend.
+
+The tool retrieves Microsoft's official Source RSS feed and MSFT adjusted daily history through Yahoo Finance. It shows retrieval time, source dates and linked announcements, then compares price, historical volatility and momentum direction with the real local baseline when their dates are comparable. It marks an older observation, synthetic baseline or missing source as unverified. One-percent price movement, three percentage points of volatility change or a momentum direction change trigger review; these are disclosed demo thresholds. Company announcements require human review. Expected-return assumptions, options data and client alignment are not automatically revalidated.
+
+The refresh endpoint is `POST /api/holdings/MSFT/update`; other tickers have no endpoint. Updates never write the cached dataset or alter the generated allocations. Failure stays inside the holding panel and can be retried. The sources may be delayed or unavailable. No AI call or client-identifying information is needed for this update. SDK implementation reference: [official MCP Python v1 documentation](https://py.sdk.modelcontextprotocol.io/v1/).
+
+For the 23 October demo, the connector also fetches and parses Microsoft's [7 October earnings announcement](https://news.microsoft.com/source/2026/10/07/microsoft-announces-quarterly-earnings-release-date-69/). Its confirmed 28 October results date falls within the example client's four-week horizon. Update surfaces **Action needed: Microsoft earnings in 5 days**, with a suggested change to the execution plan: require an earnings-risk review before funding and refresh inputs after results. The announcement URL is pinned for the demo, but the event is read from the live page; a failed fetch or an expired/out-of-horizon event cannot fabricate this flag. The panel discloses when the cached earnings calendar already contains the date. This is independent confirmation of event exposure, not evidence that the optimiser missed it or that a position cut is numerically justified.
 
 | Location | Responsibility |
 | --- | --- |
