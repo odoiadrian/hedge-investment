@@ -11,3 +11,11 @@ data/*
 !data/.gitkeep
 *.log
 .DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
