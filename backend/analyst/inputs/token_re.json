@@ -1,0 +1,12 @@
+{
+  "name": "PLACEHOLDER - choose one tokenized real estate token on RWA.xyz",
+  "issuer": "",
+  "network": "",
+  "yield_apy_pct": 6.0,
+  "tvl_usd": null,
+  "holders": null,
+  "retrieved_on": null,
+  "source_url": "https://app.rwa.xyz",
+  "is_placeholder": true,
+  "note": "yield_apy_pct = 6.0 is an ASSUMPTION used only so the model runs. Replace all fields with the real token's dashboard values and set is_placeholder to false."
+}
