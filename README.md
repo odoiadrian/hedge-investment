@@ -200,7 +200,7 @@ The supplied Bloomberg challenge brief asks teams to build an AI analyst for a d
 
 ## Next steps
 
-- Add a versioned input/output schema and a simple web interface.
+- Add a versioned input/output schema and a simple user-friendly web interface.
 - Add UK and other market public filing sources, with source links, dates, and extracted claim review.
 - Add portfolio-level risk calculations only when a documented covariance or risk methodology is supplied.
 - Add historical backtesting with point-in-time data and realistic transaction costs before presenting model performance claims.
