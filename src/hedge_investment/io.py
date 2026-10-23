@@ -49,8 +49,8 @@ def _portfolio_from_dict(data: Any, index: int) -> Portfolio:
     return Portfolio(name, risk_profile, horizon, tuple(holdings))
 
 
-def load_comparison(path: str | Path) -> dict[str, Any]:
-    """Load two portfolio proposals from JSON and return their comparison."""
+def load_analysis_input(path: str | Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, str]]:
+    """Load comparison assumptions, client context, and optional SEC CIKs."""
     input_path = Path(path)
     try:
         with input_path.open("r", encoding="utf-8") as file:
@@ -66,4 +66,24 @@ def load_comparison(path: str | Path) -> dict[str, Any]:
 
     capital_gbp = data.get("capital_gbp", 100_000)
     portfolios = [_portfolio_from_dict(item, index) for index, item in enumerate(raw_portfolios)]
-    return compare(portfolios[0], portfolios[1], capital_gbp)
+    profile = data.get("client_profile", {})
+    if not isinstance(profile, dict):
+        raise ValueError("client_profile must be an object when provided.")
+    cik_by_ticker: dict[str, str] = {}
+    for portfolio in raw_portfolios:
+        for holding in portfolio.get("holdings", []):
+            if not isinstance(holding, dict) or "sec_cik" not in holding:
+                continue
+            ticker = _required_text(holding, "ticker", "holding")
+            cik = str(holding["sec_cik"]).strip()
+            if not cik.isdigit() or len(cik) > 10:
+                raise ValueError(f"{ticker}.sec_cik must be a numeric SEC CIK of up to 10 digits.")
+            cik_by_ticker[ticker.upper()] = cik.zfill(10)
+    comparison = compare(portfolios[0], portfolios[1], capital_gbp)
+    return comparison, profile, cik_by_ticker
+
+
+def load_comparison(path: str | Path) -> dict[str, Any]:
+    """Load two portfolio proposals from JSON and return their comparison."""
+    comparison, _, _ = load_analysis_input(path)
+    return comparison
