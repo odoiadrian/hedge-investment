@@ -1,0 +1,10 @@
+pandas
+numpy
+scipy
+scikit-learn
+cvxpy
+yfinance
+requests
+openpyxl
+anthropic
+jsonschema
