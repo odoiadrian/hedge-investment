@@ -1,0 +1,35 @@
+{
+  "capital_gbp": 100000,
+  "portfolios": [
+    {
+      "name": "Example defensive",
+      "risk_profile": "defensive",
+      "horizon": "6 months",
+      "holdings": [
+        {
+          "ticker": "EXAMPLE-A",
+          "weight": 0.5,
+          "expected_return": 0.04,
+          "downside_return": -0.12,
+          "rationale": "Illustrative thesis only",
+          "source": "https://example.org/research"
+        }
+      ]
+    },
+    {
+      "name": "Example aggressive",
+      "risk_profile": "aggressive",
+      "horizon": "6 months",
+      "holdings": [
+        {
+          "ticker": "EXAMPLE-B",
+          "weight": 0.8,
+          "expected_return": 0.12,
+          "downside_return": -0.35,
+          "rationale": "Illustrative thesis only",
+          "source": "https://example.org/research"
+        }
+      ]
+    }
+  ]
+}
