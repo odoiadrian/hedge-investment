@@ -53,7 +53,7 @@ The supplied archive contains a generator, financial model and synthetic demonst
 
 The current snapshot contains 1,258 daily observations from 2021-10-25 through 2026-10-23, a market benchmark, rate series, five equity options snapshots and 120 earnings events. Sources/statuses are recorded in `meta.json` and displayed in the report. Yahoo Finance supplies prices, options and earnings. FRED was unavailable during this fetch, so Treasury rates use the supplied Yahoo `^TNX`/`^IRX` fallback. Four equities have unusable implied volatility and transparently fall back to historical volatility. A snapshot date does not guarantee every input is current or a completed trading-day close.
 
-The supported investments are MSFT, JNJ, JPM, PG, CAT, oil and natural-gas futures proxies, IEF (Treasury ETF), VNQ (REIT ETF), and cash/T-bills. Apple and gold are not in the supplied universe. **TOKEN_RE is always excluded by the web app** because its source data is a placeholder. Raw model demo scripts retain the teammate's original assumptions and may include that placeholder; use the web app for the V1 presentation.
+The supported investments are MSFT, JNJ, JPM, PG, CAT, oil and natural-gas futures proxies, IEF (Treasury ETF), VNQ (REIT ETF), and cash/T-bills. Apple and gold are not in the supplied universe. **TOKEN_RE is always excluded by the web app** because its source data is a placeholder. Raw model demo scripts retain the teammate's original assumptions and may include that placeholder; use the web app for the V1 presentation. The data used in this particular model is for demo purposes which is the reason for the limited sample size.
 
 For explicitly labelled synthetic development data:
 
